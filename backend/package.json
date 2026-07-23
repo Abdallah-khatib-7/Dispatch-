@@ -2,14 +2,20 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --watch --experimental-strip-types --env-file=.env src/index.ts",
+    "start": "node --experimental-strip-types --env-file=.env src/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "token": "node --experimental-strip-types --env-file=.env src/scripts/mintToken.ts",
+    "fetch:once": "node --experimental-strip-types --env-file=.env src/scripts/fetchOnce.ts",
+    "test:dedup": "node --experimental-strip-types src/services/dedup.test.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "bullmq": "^5.80.10",
     "dotenv": "^17.4.2",
