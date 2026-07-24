@@ -74,6 +74,21 @@ check('Different companies never merge', () => {
   assert.equal(isSameApplication(a, b), false);
 });
 
+// --- "Ventures" is a stripped corporate-structure suffix, so this collapses.
+check('CapTech and CapTech Ventures are the same application', () => {
+  const a = cand('CapTech', 'Consultant', '2026-07-01T09:00:00Z');
+  const b = cand('CapTech Ventures', 'Consultant', '2026-07-03T09:00:00Z');
+  assert.equal(isSameApplication(a, b), true);
+});
+
+// --- True negative: the suffix list must not eat a word that is part of the
+// distinguishing brand name, not just a corporate-structure tail.
+check('Acme Inc and Acme Robotics stay separate', () => {
+  const a = cand('Acme Inc', 'Engineer', '2026-07-01T09:00:00Z');
+  const b = cand('Acme Robotics', 'Engineer', '2026-07-01T09:00:00Z');
+  assert.equal(isSameApplication(a, b), false);
+});
+
 // --- findCanonicalMatch prefers exact-role match over a company-only match.
 check('findCanonicalMatch prefers the exact-role application', () => {
   const candidate = cand('Stripe', 'Backend Engineer', '2026-07-05T09:00:00Z');

@@ -5,6 +5,12 @@
 const COMPANY_SUFFIXES = [
   'inc', 'incorporated', 'llc', 'l l c', 'ltd', 'limited', 'gmbh', 'corp',
   'corporation', 'co', 'company', 'plc', 'ab', 'oy', 'as', 'bv', 'sa', 'srl',
+  // Corporate-structure words that ride along on an otherwise-matching name
+  // ("CapTech" vs "CapTech Ventures"). Excludes "studio"/"labs": those are
+  // frequently the whole brand rather than a suffix (e.g. "Notion Labs",
+  // countless design "___ Studio" shops), so stripping them risks merging
+  // a parent company with a distinctly-branded subsidiary.
+  'ventures', 'group', 'holdings', 'technologies',
 ];
 
 const collapse = (s: string): string => s.replace(/\s+/g, ' ').trim();
