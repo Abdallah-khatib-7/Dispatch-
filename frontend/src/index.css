@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+/*
+  Design system for Dispatch.
+
+  Concept: a flight-ops / forensic-audit instrument, not a consumer app.
+  Base surface is ink (deep blue-slate, not pure black); evidence lives on
+  cool "paper" panels laid on top of it. Two signal colors carry meaning
+  throughout the app: amber for "needs a human," teal for "machine is sure."
+  Rust is reserved for rejected/error states only, never used as decoration.
+
+  Type: Space Grotesk for display/headings, IBM Plex Sans for body copy,
+  IBM Plex Mono for anything that is data -- counts, timestamps, ids,
+  confidence scores, message ids. The mono face is what makes this read as
+  an audit tool instead of a marketing page.
+*/
+
+@theme {
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --color-ink: #0b1220;
+  --color-ink-raised: #121a2c;
+  --color-ink-line: #253048;
+
+  --color-paper: #edf0f3;
+  --color-paper-raised: #f8f9fb;
+  --color-paper-line: #d6dbe2;
+  --color-ink-text: #10151c;
+
+  --color-mist: #aab4c2;
+  --color-steel: #5b6675;
+
+  --color-amber: #f0a93a;
+  --color-amber-dim: #7a5a25;
+  --color-teal: #3fb8af;
+  --color-teal-dim: #1f4d49;
+  --color-rust: #c4573b;
+  --color-rust-dim: #5c2b20;
+
+  --animate-tick-in: tick-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-rail-draw: rail-draw 1.1s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes tick-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rail-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-mist);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: white;
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-teal-dim);
+    color: white;
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
